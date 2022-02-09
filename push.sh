@@ -5,4 +5,4 @@ git config --global user.name "Chenow"
 git add -A
 git commit -m "test"
 
-git push https://dbq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@github.com/Chenow/IA_tri_dechets.git 
+git push https://x-access-token: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@github.com/Chenow/IA_tri_dechets.git 
