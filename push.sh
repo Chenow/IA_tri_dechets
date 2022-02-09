@@ -5,4 +5,4 @@ git config --global user.name "Chenow"
 git add -A
 git commit -m "test"
 
-git push --set-upstream https://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@github.com/Chenow/IA_tri_dechets.git main
+git push https://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@github.com/Chenow/IA_tri_dechets.git 
