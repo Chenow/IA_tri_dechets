@@ -1,7 +1,7 @@
 import os 
 import numpy as np
 import matplotlib.pyplot as plt
-import keras
+from tensorflow import keras
 from keras.preprocessing.image import load_img, smart_resize
 from params import *
 

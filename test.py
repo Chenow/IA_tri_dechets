@@ -19,18 +19,26 @@ x_test = x_test.reshape(-1, 32, 32, 3).astype("float32") / 255.0
 
 
 
+class block(layers.layer)
+
+
+
+
 class block_ResNet(layers.Layer):
-    def __init__(self, nbr_filtres, pool_size=POOL_SIZE_MODEL, padding=PADDING_MODEL, kernel_size=KERNEL_SIZE_MODEL, activation=ACTIVATION_MODEL):
+    def __init__(self, nbr_filtres, pool_size=POOL_SIZE_MODEL, padding=PADDING_MODEL,
+     kernel_size=KERNEL_SIZE_MODEL, activation=ACTIVATION_MODEL):
         super(block_ResNet, self).__init__()
         self.MaxPooling2D = layers.MaxPooling2D(pool_size=pool_size, padding=padding)
-        self.Conv2D = layers.Conv2D(nbr_filtres, kernel_size=kernel_size, padding=padding, activation=activation)
+
+        self.Conv2D = layers.Conv2D(nbr_filtres, kernel_size=kernel_size, 
+        padding=padding, activation=activation)
 
     def call(self, input_tensor, nbr_conv):
         x = self.MaxPooling2D(input_tensor)
         for i in range(2):
             x = self.Conv2D(x)
         for i in range(nbr_conv):
-            y = self.Conv2D(x)
+            x = self.lacouche()
             x+= self.Conv2D(y)
         return x
 
@@ -42,10 +50,9 @@ class ResNet(keras.Model):
         self.Conv2D_unique = layers.Conv2D(64, 7, 7, padding=padding, activation=activation)
         self.AveragePooling2D = keras.layers.AveragePooling2D(pool_size=pool_size,padding=padding)
         self.block_Resnet1 = block_ResNet(64)
-        self.block_Resnet2 = block_ResNet(64)
-        self.block_Resnet3 = block_ResNet(64)
+        self.block_Resnet2 = block_ResNet(128)
+        self.block_Resnet3 = block_ResNet(256)
         self.block_Resnet4 = block_ResNet(64)
-
 
     def call(self, input_tensor, nbr_conv=NBR_CONV_MODEL):
         x = self.Conv2D_unique(input_tensor)
