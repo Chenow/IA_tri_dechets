@@ -1,8 +1,8 @@
+from numpy import block
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers
 from keras.datasets import cifar10
-from keras.optimizers import Adam
 
 
 # Model parameters
@@ -18,54 +18,45 @@ x_test = x_test.reshape(-1, 32, 32, 3).astype("float32") / 255.0
 
 
 
-class block_model(layers.Layer):
+class block_ResNet(layers.Layer):
+    def __init__(self, nbr_filtres, pool_size=POOL_SIZE_MODEL, padding=PADDING_MODEL, kernel_size=KERNEL_SIZE_MODEL, activation=ACTIVATION_MODEL):
+        super(block_ResNet, self).__init__()
+        self.MaxPooling2D = layers.MaxPooling2D(pool_size=pool_size, padding=padding)
+        self.Conv2D = layers.Conv2D(nbr_filtres, kernel_size=kernel_size, padding=padding, activation=activation)
 
-  def __init__(self):
-    super(block_model, self).__init__()
-    self.MaxPooling2D = keras.layers.MaxPooling2D(pool_size=POOL_SIZE_MODEL, padding=PADDING_MODEL)
+    def call(self, input_tensor, nbr_conv):
+        x = self.MaxPooling2D(input_tensor)
+        for i in range(2):
+            x = self.Conv2D(x)
+        for i in range(nbr_conv):
+            y = self.Conv2D(x)
+            x+= self.Conv2D(y)
+        return x
 
-  def call(self, x, nbr_conv, nbr_filtres):
-    x=self.MaxPooling2D(x)
-    for i in range(2):
-      x =  keras.layers.Conv2D(nbr_filtres, kernel_size=KERNEL_SIZE_MODEL, padding=PADDING_MODEL, activation=ACTIVATION_MODEL)(x)
-    for i in range(nbr_conv):
-      y =  keras.layers.Conv2D(nbr_filtres, kernel_size=KERNEL_SIZE_MODEL, padding=PADDING_MODEL, activation=ACTIVATION_MODEL)(x)
-      x +=  keras.layers.Conv2D(nbr_filtres, kernel_size=KERNEL_SIZE_MODEL, padding=PADDING_MODEL, activation=ACTIVATION_MODEL)(y)
 
-    return x
+
 class ResNet(keras.Model):
- 
-  def __init__(self, 
-               padding=PADDING_MODEL,
-               activation=ACTIVATION_MODEL,
-               pool_size=POOL_SIZE_MODEL):
-    super(ResNet, self).__init__()
-    self.conv2D_unique = keras.layers.Conv2D(64, 7, 7, padding=padding, activation=activation)
-    self.AveragePooling2D = keras.layers.AveragePooling2D(pool_size=pool_size, padding=padding)
-    self.block_model = block_model()
-
-  def call(self, 
-          input_tensor,
-          nbr_conv=NBR_CONV_MODEL):
-
-    x = self.conv2D_unique(input_tensor)
-    for i in range(len(nbr_conv)):
-      x = self.block_model(x,
-                      nbr_conv[i],
-                      64*2**i,
-                      )
-    x = self.AveragePooling2D(x)
-    return self
+    def __init__(self, num_classes=6, padding=PADDING_MODEL, activation=ACTIVATION_MODEL, pool_size=POOL_SIZE_MODEL):
+        super(ResNet, self).__init__()
+        self.Conv2D_unique = layers.Conv2D(32, 7, 7, padding=padding, activation=activation)
+        self.AveragePooling2D = keras.layers.AveragePooling2D(pool_size=pool_size,padding=padding)
+        self.block_Resnet1 = block_ResNet(64)
+        self.block_Resnet2 = block_ResNet(128)
+        self.block_Resnet3 = block_ResNet(256)
+        self.block_Resnet4 = block_ResNet(512)
 
 
+    def call(self, input_tensor, nbr_conv=NBR_CONV_MODEL):
+        x = self.Conv2D_unique(input_tensor)
+        x =  self.block_Resnet1(x, nbr_conv[1])
+        x =  self.block_Resnet2(x, nbr_conv[2])
+        x =  self.block_Resnet3(x, nbr_conv[3])
+        x =  self.block_Resnet4(x, nbr_conv[4])
+        return self.Averagepooling2D(x)
 
 
-model = ResNet()
+model=ResNet()
+model.build((1, 32, 32, 3))
+model.compile()
 model.summary()
-model.compile(optimizer=Adam(learning_rate=1e-3),
-              loss="categorical_crossentropy",
-              metrics=["accuracy"])
-
-model.fit(x_train, y_train, batch_size=32, epochs=2, verbose=2)
-model.evaluate(x_test, y_test, batch_size=32)
-
+model.fit(x_train, y_train)
