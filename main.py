@@ -55,44 +55,6 @@ def calculate_probability_mobile_netv2(x0, activation=ACTIVATION, kernel_size=KE
 
 
 
-def residual_block(x_input, filter_numbers, kernel_size=3, activation='relu'):
-    x_intermediate = tf.keras.layers.Conv2D(filter_numbers, kernel_size, padding="same", activation=activation)(x_input)
-    return tf.keras.layers.Conv2D(filter_numbers, kernel_size, padding="same", activation=activation)(x_intermediate) + x_input
-
-
-def module(x, number_residual_blocks, filter_numbers,
-    number_filters_first_block, kernel_size=3, activation='relu'):
-    x = tf.keras.layers.MaxPooling2D(padding="same", pool_size=(2, 2))(x)
-
-    if filter_numbers != number_filters_first_block:
-        x = tf.keras.layers.Conv2D(filter_numbers,
-         kernel_size, padding="same", activation=activation)(x)
-        x = tf.keras.layers.Conv2D(filter_numbers, kernel_size, padding="same",
-         activation=activation)(x)
-
-    for i in range(number_residual_blocks):
-        x = residual_block(x, filter_numbers=filter_numbers)
-
-    return x
-
-
-def calculate_probability(x):
-    x = tf.keras.layers.Conv2D(NUMBER_OF_FILTERS_FIRST_BLOCK, FIRST_KERNEL_SIZE, 
-    activation=ACTIVATION)(x)
-
-    for index, number_of_residual_blocks in enumerate(RESIDUAL_BLOCKS_PER_MODULE):
-        x = module(x,
-                   number_residual_blocks=number_of_residual_blocks,
-                   filter_numbers=NUMBER_OF_FILTERS_FIRST_BLOCK*2**index,
-                   number_filters_first_block=NUMBER_OF_FILTERS_FIRST_BLOCK,
-                   kernel_size=KERNEL_SIZE,
-                   activation=ACTIVATION) 
-
-    x = tf.keras.layers.GlobalAveragePooling2D()(x)
-    return tf.keras.layers.Dense(NUMBER_OF_CLASSES, activation="softmax")(x)
-
-
-
 
 def get_data(input_shape):
     train, val, test = create_generators()
