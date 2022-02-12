@@ -16,7 +16,8 @@ def train_model():
     model = get_model(INPUT_SHAPE)
     model.summary()
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
-                  loss=tf.keras.losses.CategoricalCrossentropy())
-    model.fit(train)
+                  loss=tf.keras.losses.CategoricalCrossentropy(),
+                  metrics=["accuracy"])
+    model.fit(train, epochs=5, validation_data=test)
  
 train_model()
