@@ -30,5 +30,6 @@ NUMBER_OF_CLASSES = 6
 INPUT_SHAPE = (32, 32, 3)
 
 # Target parameters
-A_MIN=0.95
-A_C=0.90
+A_MIN = 0.6
+A_C = 0.44
+ALPHA = 0.05
