@@ -12,12 +12,13 @@ def get_model(input_shape):
     return tf.keras.Model(inputs=x_input, outputs=x_output)
 
 def train_model():
-    train, val, test = get_data(INPUT_SHAPE)
-    model = get_model(INPUT_SHAPE)
+    train, val, test = get_data((*TRAINING_IMAGE_SIZE,NUMBER_OF_CHANNELS))
+    model = get_model((*TRAINING_IMAGE_SIZE,NUMBER_OF_CHANNELS))
     model.summary()
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
                   loss=tf.keras.losses.CategoricalCrossentropy(),
                   metrics=["accuracy"])
-    model.fit(train, epochs=5, validation_data=test)
- 
+    model.fit(train,
+              validation_data=val
+                        )
 train_model()
