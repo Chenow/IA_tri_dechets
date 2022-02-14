@@ -8,7 +8,7 @@ def get_data(input_shape):
 
 def get_model(input_shape):
     x_input = tf.keras.layers.Input(input_shape)
-    x_output = calculate_probability_mobile_netv2(x_input)
+    x_output = calculate_probability(x_input)
     return tf.keras.Model(inputs=x_input, outputs=x_output)
 
 def train_model():
@@ -19,6 +19,7 @@ def train_model():
                   loss=tf.keras.losses.CategoricalCrossentropy(),
                   metrics=["accuracy"])
     model.fit(train,
+              epochs=4,
               validation_data=val
                         )
 train_model()
