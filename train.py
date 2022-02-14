@@ -15,7 +15,7 @@ def train_model():
     train, val, test = get_data((*TRAINING_IMAGE_SIZE,NUMBER_OF_CHANNELS))
     model = get_model((*TRAINING_IMAGE_SIZE,NUMBER_OF_CHANNELS))
     model.summary()
-    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=8e-6),
+    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
                   loss=tf.keras.losses.CategoricalCrossentropy(),
                   metrics=["accuracy"])
     model.fit(train,
