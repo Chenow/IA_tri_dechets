@@ -74,3 +74,11 @@ def calculate_probability_mobile_netv2(x0, activation=ACTIVATION, kernel_size=KE
     x = tf.keras.layers.Dense(NUMBER_OF_CLASSES, activation='softmax')(x)
     return x
 
+#Model test
+
+model_test = keras.models.Sequential()
+
+model_test.add(keras.layers.Flatten(input_shape=(256, int(1.3*256), 3)))
+model_test.add(keras.layers.Dense(1000, activation="relu"))
+model_test.add(keras.layers.Dense(100, activation="relu"))
+model_test.add(keras.layers.Dense(NUMBER_OF_CLASSES, activation="softmax"))

@@ -1,5 +1,7 @@
 from data import create_generators
 from model import *
+from analyse import *
+from sklearn.metrics import confusion_matrix
 
 
 def get_data(input_shape):
@@ -22,4 +24,9 @@ def train_model():
               epochs=4,
               validation_data=val
                         )
+
+
 train_model()
+
+cm = confusion_matrix(test[1], model(test[0], normalize='True'))
+show_confusion_matrix(cm, LIST_OF_CLASSES)
