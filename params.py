@@ -27,7 +27,7 @@ LAST_CHANNEL = 1280
 
 # Data parameters
 NUMBER_OF_CLASSES = 6
-LIST_OF_CLASSES=[cardboard, glass, metal, paper, plastic, trash]
+LIST_OF_CLASSES=["cardboard", "glass", "metal", "paper", "plastic", "trash"]
 
 # Target parameters
 A_MIN = 0.6

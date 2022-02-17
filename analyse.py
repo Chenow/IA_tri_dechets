@@ -1,6 +1,6 @@
 from sklearn.metrics import confusion_matrix
 
-cdef show_confusion_matrix(matrix, labels):
+def show_confusion_matrix(matrix, labels):
     fig, ax = plt.subplots(figsize=(10,10))
     im = ax.imshow(matrix)
     
@@ -27,4 +27,3 @@ cdef show_confusion_matrix(matrix, labels):
     fig.tight_layout()
     plt.show()
     
-show_confusion_matrix(cm, class_names)
