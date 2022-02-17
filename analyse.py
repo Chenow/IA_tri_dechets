@@ -1,4 +1,6 @@
 from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import numpy as np
 
 def show_confusion_matrix(matrix, labels):
     fig, ax = plt.subplots(figsize=(10,10))
@@ -20,7 +22,7 @@ def show_confusion_matrix(matrix, labels):
     # Loop over data dimensions and create text annotations.
     for i in range(N):
         for j in range(N):
-            text = ax.text(j, i, cm[i, j],
+            text = ax.text(j, i, matrix[i, j],
                            ha="center", va="center", color="w")
 
     ax.set_title("Matrice de confusion")

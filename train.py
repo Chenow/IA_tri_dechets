@@ -21,12 +21,13 @@ def train_model():
                   loss=tf.keras.losses.CategoricalCrossentropy(),
                   metrics=["accuracy"])
     model.fit(train,
-              epochs=4,
-              validation_data=val
+              epochs=1,
+              steps_per_epoch=1
                         )
+    return test, model
 
+test, model = train_model()
+print (test[0][0])
 
-train_model()
-
-cm = confusion_matrix(test[1], model(test[0], normalize='True'))
+cm = confusion_matrix(test[1], model(test[0]), normalize='True')
 show_confusion_matrix(cm, LIST_OF_CLASSES)
