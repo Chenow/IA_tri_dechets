@@ -29,8 +29,8 @@ def train_model():
                   loss=tf.keras.losses.CategoricalCrossentropy(),
                   metrics=["accuracy"])
     model.fit(train,
-              epochs=1,
-              steps_per_epoch=1
+              epochs=4,
+              steps_per_epoch=94
                         )
     return test, model
 
