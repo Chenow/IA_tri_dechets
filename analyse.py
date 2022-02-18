@@ -22,7 +22,7 @@ def show_confusion_matrix(matrix, labels):
     # Loop over data dimensions and create text annotations.
     for i in range(N):
         for j in range(N):
-            text = ax.text(j, i, matrix[i, j],
+            text = ax.text(j, i, cm[i, j],
                            ha="center", va="center", color="w")
 
     ax.set_title("Matrice de confusion")
