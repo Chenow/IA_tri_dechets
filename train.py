@@ -30,7 +30,8 @@ def train_model(epochs, learning_rate):
                   metrics=["accuracy"])
     model.fit(train,
               epochs=epochs,
-              steps_per_epoch=94
+              steps_per_epoch=94,
+              validation_data=val
                         )
     return test, model
 

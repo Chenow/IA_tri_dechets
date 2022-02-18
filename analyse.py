@@ -2,7 +2,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
     
-def show_confusion_matrix(matrix, labels, test, model):
+def show_confusion_matrix(labels, test, model):
 
     x_test, y_test = [], []
     for i in range(len(test)):
@@ -18,7 +18,7 @@ def show_confusion_matrix(matrix, labels, test, model):
         cm[i][j] = round(cm[i][j], 2)
 
     fig, ax = plt.subplots(figsize=(10,10))
-    im = ax.imshow(matrix)
+    im = ax.imshow(cm)
     
     N = len(labels)
 
