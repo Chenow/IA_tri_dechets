@@ -1,8 +1,22 @@
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
+    
+def show_confusion_matrix(matrix, labels, test, model):
 
-def show_confusion_matrix(matrix, labels):
+    x_test, y_test = [], []
+    for i in range(len(test)):
+      x,y = test[i]
+      x = model(x)
+      for elm in x:
+        x_test.append(elm)
+      for elm in y:
+        y_test.append(elm)
+    cm = confusion_matrix(np.argmax(y_test,axis=1), np.argmax(x_test,axis=1), normalize='true')
+    for i in range(6):
+      for j in range(6):
+        cm[i][j] = round(cm[i][j], 2)
+
     fig, ax = plt.subplots(figsize=(10,10))
     im = ax.imshow(matrix)
     
@@ -28,4 +42,3 @@ def show_confusion_matrix(matrix, labels):
     ax.set_title("Matrice de confusion")
     fig.tight_layout()
     plt.show()
-    
