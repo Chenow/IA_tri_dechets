@@ -42,7 +42,7 @@ def train_model(epochs=EPOCHS, learning_rate=LEARNING_RATE):
                   metrics=["accuracy"])
     model.fit(train,
               epochs=epochs,
-              steps_per_epoch=1,
+              steps_per_epoch=94,
               validation_data=val
                         )
     save_model(model)
