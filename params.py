@@ -33,3 +33,13 @@ LIST_OF_CLASSES=["cardboard", "glass", "metal", "paper", "plastic", "trash"]
 A_MIN = 0.6
 A_C = 0.44
 ALPHA = 0.05
+
+#Train parameters
+LEARNING_RATE = 1e-4
+EPOCHS = 1
+
+#Stockage parameters
+PATH_MODELS = "models"
+DATA_TO_IDENTIFY_PATH = "datas_to_identify"
+PATH_DATAS_IDENTIFIED = "datas_identified"
+MODEL_TO_USE = "model1"
