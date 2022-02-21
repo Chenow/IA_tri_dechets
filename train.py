@@ -25,6 +25,10 @@ def get_model(input_shape):
     return tf.keras.Model(inputs=x_input, outputs=x_output)
 
 def save_model(model, path_models = PATH_MODELS):
+
+    if os.path.exists("./" + path_models) == False:
+        os.makedirs("./" + path_models)
+
     if os.listdir("./" + path_models) == []:
            model.save("./" + path_models + "/model1")
     else:

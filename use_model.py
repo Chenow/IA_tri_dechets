@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 def identify_images(model_to_use=MODEL_TO_USE):
-
+    
     model = keras.models.load_model("./" + PATH_MODELS + "/" + MODEL_TO_USE)
     if os.path.exists("./" + PATH_DATAS_IDENTIFIED):
         shutil.rmtree("./" + PATH_DATAS_IDENTIFIED)
