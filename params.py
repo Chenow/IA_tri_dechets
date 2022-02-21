@@ -36,7 +36,7 @@ ALPHA = 0.05
 
 #Train parameters
 LEARNING_RATE = 1e-4
-EPOCHS = 4
+EPOCHS = 20
 
 #Stockage parameters
 PATH_MODELS = "models"
