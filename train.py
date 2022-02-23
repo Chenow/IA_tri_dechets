@@ -26,16 +26,21 @@ def get_model(input_shape):
 
 def save_model(model, path_models = PATH_MODELS):
 
-    if os.path.exists("./" + path_models) == False:
+    if not os.path.exists("./" + path_models):
         os.makedirs("./" + path_models)
 
-    if os.listdir("./" + path_models) == []:
-           model.save("./" + path_models + "/model1")
+    if not os.listdir("./" + path_models):
+           model.save("./" + path_models + "/model_1")
+
     else:
-        name_last_model = os.listdir("./" + path_models)[-1]
-        path_save_model = "./" + path_models + "/model" + str(int(name_last_model[-1]) + 1) 
+        print(os.listdir(path_models))
+        indice_last_model = max([int(i.split("_")[-1]) for i in os.listdir(path_models) if not i.startswith(".") ]) 
+        path_save_model = "./" + path_models + "/model_" + str(indice_last_model + 1) 
         model.save(path_save_model)
     return
+
+
+
 
 def train_model(epochs=EPOCHS, learning_rate=LEARNING_RATE):
     train, val, test = get_data((*TRAINING_IMAGE_SIZE,NUMBER_OF_CHANNELS))
@@ -49,6 +54,7 @@ def train_model(epochs=EPOCHS, learning_rate=LEARNING_RATE):
               steps_per_epoch=94,
               validation_data=val
                         )
+    model.evaluate(test)
     save_model(model)
     return test, model
 

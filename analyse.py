@@ -1,8 +1,9 @@
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
+from params import LIST_OF_CLASSES
     
-def show_confusion_matrix(labels, test, model):
+def show_confusion_matrix(test, model, labels=LIST_OF_CLASSES):
 
     x_test, y_test = [], []
     for i in range(len(test)):

@@ -1,6 +1,7 @@
 # General data parameters
 DATASET_PATH = 'dataset-resized'
 SHUFFLE_DATA = True
+SEED = 42
 
 # Data generator parameters
 TRAINING_BATCH_SIZE = 16
@@ -10,6 +11,7 @@ VALIDATION_IMAGE_SIZE = (256, int(1.3*256))
 TESTING_BATCH_SIZE = 16
 TESTING_IMAGE_SIZE = (256, int(1.3*256))
 NUMBER_OF_CHANNELS = 3
+TEST_SIZE = 36
 
 # Model parameters
 RESIDUAL_BLOCKS_PER_MODULE = [3, 3, 1, 0]
@@ -27,7 +29,8 @@ LAST_CHANNEL = 1280
 
 # Data parameters
 NUMBER_OF_CLASSES = 6
-LIST_OF_CLASSES=["cardboard", "glass", "metal", "paper", "plastic", "trash"]
+LIST_OF_CLASSES = ['plastic', 'cardboard', 'paper', 'metal', 'trash', 'glass']
+
 
 # Target parameters
 A_MIN = 0.6
@@ -42,4 +45,4 @@ EPOCHS = 20
 PATH_MODELS = "models"
 DATA_TO_IDENTIFY_PATH = "datas_to_identify"
 PATH_DATAS_IDENTIFIED = "datas_identified"
-MODEL_TO_USE = "model1"
+MODEL_TO_USE = "model_4"

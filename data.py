@@ -13,7 +13,7 @@ def create_generators(data_path=DATASET_PATH):
         paths_to_add = [os.path.join(folder, path) for path in os.listdir(os.path.join(data_path, folder)) if path.endswith('jpg')]
         image_paths = image_paths + paths_to_add
 
-    train_list, val_list, test_list = data_split(np.asarray(image_paths))
+    test_list, val_list, train_list = data_split(np.asarray(image_paths))
 
     train_data_generator = DataGeneratorClassifier(train_list, TRAINING_BATCH_SIZE, TRAINING_IMAGE_SIZE)
     validation_data_generator = DataGeneratorClassifier(val_list, VALIDATION_BATCH_SIZE, VALIDATION_IMAGE_SIZE)
@@ -23,9 +23,11 @@ def create_generators(data_path=DATASET_PATH):
 
 def data_split(paths_list):
     'Splits the paths list into three splits'
-    split_1 = int(0.6*len(paths_list))
-    split_2 = int(0.8*len(paths_list))
-    np.random.shuffle(paths_list)
+    size = TEST_SIZE
+    split_1 = size
+    split_2 = 2*size
+    np.random.seed(seed=SEED)
+    np.random.shuffle(paths_list, )
     return paths_list[:split_1], paths_list[split_1:split_2], paths_list[split_2:]
 
 
